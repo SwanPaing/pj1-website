@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <title>1.1</title>
+    <style>
+        body{
+            text-align: center;
+            background-color: rgb(0, 140, 255);
+            color: white;
+            font-weight: bold;
+        }
+        button{
+            display: block;
+            margin: auto;
+            margin-bottom: 10px;
+            width: 300px;
+            height: 30px;
+            background-color: rgb(19, 0, 139);
+            color: white;
+            border-radius: 25px;
+        }
+        #con{
+            display: none;
+            border: solid;
+        }
+        h1{
+            color: rgb(92, 0, 128);
+            border: dotted;
+            font-size: 50px;
+        }
+        h4{
+            font-size: 20px;
+        }
+        #pop{
+            display: none;
+        }
+        #t{
+            position: absolute;
+            right: 100px;
+            top: 150px;
+        }
+        #v{
+            position: absolute;
+            right: 80px;
+            top: 152px;
+        }
+        #time{
+            position: absolute;
+            left: 20px;
+            top: 152px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quiz Time</h1>
+    <div id="O">
+        <p>Ready to answer questions?</p>    
+        <button id="start">Start</button>
+    </div>
+    <div id="con">
+        <h4>Which planet is closet to the sun?</h4>
+        <span id="t">Score : </span>
+        <span id="v">0</span>
+        <span id="time">Time : 9</span>
+        <button id="a"><b> Mars </b></button>
+        <button id="b"><b> Neptune </b> </button>
+        <button id="c"><b> Mercury </b></button>
+        <button id="d"><b> Jupiter </b></button>
+    </div>
+    <div id="pop">
+        <p id="text">Correct</p>
+        <button id="x">Next Quiz</button>
+    </div>
+    <div id="result"></div>
+    <script>
+        const div = document.getElementById("pop")
+        const p = document.getElementById("text")
+        const  h4 = document.querySelector("h4")
+        const a = document.getElementById("a")
+        const b = document.getElementById("b")
+        const c = document.getElementById("c")
+        const d = document.getElementById("d")
+        const bn = document.getElementById("x")
+
+        let v = document.getElementById("v")
+        let score = 0;
+        let time = document.getElementById("time")
+        let seconds = 9;
+        let interval = null
+
+        function timer(){
+            seconds--
+            if(seconds <= 0){
+                clearInterval(interval)
+                div.style.display = "block"
+                p.innerHTML = "Wrong Answer"
+                a.disabled = true
+                b.disabled = true
+                c.disabled = true
+                d.disabled = true
+                next()
+            }
+            time.innerHTML = `Time : ${seconds}`
+        }
+        function startTime(){
+            interval = setInterval(timer, 1000)
+        }
+        function resetTime(){
+            clearInterval(interval)
+            seconds = 10
+            startTime()
+        }
+        function wrongA(){
+            a.style.backgroundColor = "red"
+            div.style.display = "block"
+            p.innerHTML = "Wrong Answer"
+            clearInterval(interval)
+        }
+        function wrongB(){
+            b.style.backgroundColor = "red"
+            div.style.display = "block"
+            p.innerHTML = "Wrong Answer"
+            clearInterval(interval)
+        }
+        function wrongC(){
+            c.style.backgroundColor = "red"
+            div.style.display = "block"
+            p.innerHTML = "Wrong Answer"
+            clearInterval(interval)
+        }
+        function wrongD(){
+            d.style.backgroundColor = "red"
+            div.style.display = "block"
+            p.innerHTML = "Wrong Answer"
+            clearInterval(interval)
+        }
+        function rightA(){
+            a.style.backgroundColor = "green"
+            div.style.display = "block"
+            p.innerHTML = "Correct"
+            score += 10
+            v.innerHTML = `${score}`
+            clearInterval(interval)
+        }
+        function rightB(){
+            b.style.backgroundColor = "green"
+            div.style.display = "block"
+            p.innerHTML = "Correct"
+            score += 10
+            v.innerHTML = `${score}`
+            clearInterval(interval)
+        }
+        function rightC(){
+            c.style.backgroundColor = "green"
+            div.style.display = "block"
+            p.innerHTML = "Correct"
+            score += 10
+            v.innerHTML = `${score}`
+            clearInterval(interval)
+        }
+        function rightD(){
+            d.style.backgroundColor = "green"
+            div.style.display = "block"
+            p.innerHTML = "Correct"
+            score += 10
+            v.innerHTML = `${score}`
+            clearInterval(interval)
+        }
+        document.getElementById("start").onclick = function(){
+            document.getElementById("O").style.display = "none"
+            document.getElementById("con").style.display = "block"
+            startTime()
+        }
+        document.getElementById("a").onclick = function(){
+            wrongA()
+            next()
+            b.disabled = true
+            c.disabled = true
+            d.disabled = true
+            clearInterval(interval)
+        }
+        document.getElementById("b").onclick = function(){
+            wrongB()
+            next()
+            a.disabled = true
+            c.disabled = true
+            d.disabled = true
+        }
+        document.getElementById("c").onclick = function(){
+            rightC()
+            next()
+            b.disabled = true
+            a.disabled = true
+            d.disabled = true
+        }
+        document.getElementById("d").onclick = function(){
+            wrongD()
+            next()
+            b.disabled = true
+            c.disabled = true
+            a.disabled = true
+        }
+        function two(){
+            div.style.display = "none"
+            a.style.backgroundColor = "rgb(19, 0, 139)"
+            b.style.backgroundColor = "rgb(19, 0, 139)"
+            c.style.backgroundColor = "rgb(19, 0, 139)"
+            d.style.backgroundColor = "rgb(19, 0, 139)"
+            
+            h4.textContent = "What is the capital of Japan?"
+            a.textContent = "Osaka"
+            a.onclick = function(){
+                wrongA()
+                nextI()
+                b.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            b.textContent = "Kyoto"
+            b.onclick = function(){
+                wrongB()
+                nextI()
+                a.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            c.textContent = "Okinawa"
+            c.onclick = function(){
+                wrongC()
+                nextI()
+                a.disabled = true
+                b.disabled = true
+                d.disabled = true
+            }
+            d.textContent = "Tokyo"
+            d.onclick = function(){
+                rightD()
+                nextI()
+                a.disabled = true
+                b.disabled = true
+                c.disabled = true
+            }
+        }
+        function three(){
+            div.style.display = "none"
+            a.style.backgroundColor = "rgb(19, 0, 139)"
+            b.style.backgroundColor = "rgb(19, 0, 139)"
+            c.style.backgroundColor = "rgb(19, 0, 139)"
+            d.style.backgroundColor = "rgb(19, 0, 139)"
+
+            h4.textContent = "What was the name of the first spaceship to land on the moon?"
+            a.textContent = "Millennium Falcon"
+            a.onclick = function(){
+                wrongA()
+                nextII()
+                b.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            b.textContent = "Apollo 11 Lunar Module(LM) 'Eagle'"
+            b.onclick = function(){
+                rightB()
+                nextII()
+                a.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            c.textContent = "Sputnik 1"
+            c.onclick = function(){
+                wrongC()
+                nextII()
+                a.disabled = true
+                b.disabled = true
+                d.disabled = true
+            }
+            d.textContent = "Lunar 11"
+            d.onclick = function(){
+                wrongD()
+                nextII()
+                a.disabled = true
+                b.disabled = true
+                c.disabled = true
+            }
+        }
+        function four(){
+            div.style.display = "none"
+            a.style.backgroundColor = "rgb(19, 0, 139)"
+            b.style.backgroundColor = "rgb(19, 0, 139)"
+            c.style.backgroundColor = "rgb(19, 0, 139)"
+            d.style.backgroundColor = "rgb(19, 0, 139)"
+            
+            h4.textContent = "What is the chemical formula of sand?"
+            a.textContent = "Al2O3"
+            a.onclick = function(){
+                wrongA()
+                nextIII()
+                b.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            b.textContent = "CaO"
+            b.onclick = function(){
+                wrongB()
+                nextIII()
+                a.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            c.textContent = "Mg2O4"
+            c.onclick = function(){
+                wrongC()
+                nextIII()
+                b.disabled = true
+                a.disabled = true
+                d.disabled = true
+            }
+            d.textContent = "SiO2"
+            d.onclick = function(){
+                rightD()
+                nextIII()
+                b.disabled = true
+                c.disabled = true
+                a.disabled = true
+            }
+        }
+        function five(){
+            div.style.display = "none"
+            a.style.backgroundColor = "rgb(19, 0, 139)"
+            b.style.backgroundColor = "rgb(19, 0, 139)"
+            c.style.backgroundColor = "rgb(19, 0, 139)"
+            d.style.backgroundColor = "rgb(19, 0, 139)"
+            
+            h4.textContent = "What country is the first winner of World Cup?"
+            a.textContent = "Spain"
+            a.onclick = function(){
+                wrongA()
+                nextIV()
+                b.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            b.textContent = "Brazil"
+            b.onclick = function(){
+                wrongB()
+                nextIV()
+                a.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            c.textContent = "Uruguay"
+            c.onclick = function(){
+                rightC()
+                nextIV()
+                b.disabled = true
+                a.disabled = true
+                d.disabled = true
+            }
+            d.textContent = "England"
+            d.onclick = function(){
+                wrongD()
+                nextIV()
+                b.disabled = true
+                c.disabled = true
+                a.disabled = true
+            }
+        }
+        function six(){
+            div.style.display = "none"
+            a.style.backgroundColor = "rgb(19, 0, 139)"
+            b.style.backgroundColor = "rgb(19, 0, 139)"
+            c.style.backgroundColor = "rgb(19, 0, 139)"
+            d.style.backgroundColor = "rgb(19, 0, 139)"
+            
+            h4.textContent = "What is the SI unit of magnetic field?"
+            a.textContent = "Nweton"
+            a.onclick = function(){
+                wrongA()
+                nextV()
+                b.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            b.textContent = "Coulomb"
+            b.onclick = function(){
+                wrongB()
+                nextV()
+                a.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            c.textContent = "Joule"
+            c.onclick = function(){
+                wrongC()
+                nextV()
+                b.disabled = true
+                a.disabled = true
+                d.disabled = true
+            }
+            d.textContent = "Tesla"
+            d.onclick = function(){
+                rightD()
+                nextV()
+                b.disabled = true
+                c.disabled = true
+                a.disabled = true
+            }
+        }
+        function seven(){
+            div.style.display = "none"
+            a.style.backgroundColor = "rgb(19, 0, 139)"
+            b.style.backgroundColor = "rgb(19, 0, 139)"
+            c.style.backgroundColor = "rgb(19, 0, 139)"
+            d.style.backgroundColor = "rgb(19, 0, 139)"
+            
+            h4.textContent = "How many teeth does an adult person have?"
+            a.textContent = "18"
+            a.onclick = function(){
+                wrongA()
+                nextVI()
+                b.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            b.textContent = "32"
+            b.onclick = function(){
+                rightB()
+                nextVI()
+                a.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            c.textContent = "36"
+            c.onclick = function(){
+                wrongC()
+                nextVI()
+                a.disabled = true
+                b.disabled = true
+                d.disabled = true
+            }
+            d.textContent = "28"
+            d.onclick = function(){
+                wrongD()
+                nextVI()
+                a.disabled = true
+                b.disabled = true
+                c.disabled = true
+            }
+        }
+        function eight(){
+            div.style.display = "none"
+            a.style.backgroundColor = "rgb(19, 0, 139)"
+            b.style.backgroundColor = "rgb(19, 0, 139)"
+            c.style.backgroundColor = "rgb(19, 0, 139)"
+            d.style.backgroundColor = "rgb(19, 0, 139)"
+            
+            h4.textContent = "Who was the president of US during WW1?"
+            a.textContent = "Franklin D. Roosevelt"
+            a.onclick = function(){
+                wrongA()
+                nextVII()
+                b.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            b.textContent = "John F. Kennedy"
+            b.onclick = function(){
+                wrongB()
+                nextVII()
+                a.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            c.textContent = "Woodrow Wilson"
+            c.onclick = function(){
+                rightC()
+                nextVII()
+                a.disabled = true
+                b.disabled = true
+                d.disabled = true
+            }
+            d.textContent = "Abraham Lincoln"
+            d.onclick = function(){
+                wrongD()
+                nextVII()
+                a.disabled = true
+                b.disabled = true
+                c.disabled = true
+            }
+        }
+        function nine(){
+            div.style.display = "none"
+            a.style.backgroundColor = "rgb(19, 0, 139)"
+            b.style.backgroundColor = "rgb(19, 0, 139)"
+            c.style.backgroundColor = "rgb(19, 0, 139)"
+            d.style.backgroundColor = "rgb(19, 0, 139)"
+            
+            h4.textContent = "Who has won the most Grammy adwards?"
+            a.textContent = "Beyonce"
+            a.onclick = function(){
+                rightA()
+                nextVIII()
+                b.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            b.textContent = "Taylor Swif"
+            b.onclick = function(){
+                wrongB()
+                nextVIII()
+                a.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            c.textContent = "Georg Solti"
+            c.onclick = function(){
+                wrongC()
+                nextVIII()
+                a.disabled = true
+                b.disabled = true
+                d.disabled = true
+            }
+            d.textContent = "Quincy Jones"
+            d.onclick = function(){
+                wrongD()
+                nextVIII()
+                a.disabled = true
+                b.disabled = true
+                c.disabled = true
+            }
+        }
+        function ten(){
+            div.style.display = "none"
+            a.style.backgroundColor = "rgb(19, 0, 139)"
+            b.style.backgroundColor = "rgb(19, 0, 139)"
+            c.style.backgroundColor = "rgb(19, 0, 139)"
+            d.style.backgroundColor = "rgb(19, 0, 139)"
+            
+            h4.textContent = "What does DNS stand for?"
+            a.textContent = "Document Name System"
+            a.onclick = function(){
+                wrongA()
+                nextIX()
+                b.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            b.textContent = "Domain Nerwork Security"
+            b.onclick = function(){
+                wrongB()
+                nextIX()
+                a.disabled = true
+                c.disabled = true
+                d.disabled = true
+            }
+            c.textContent = "Domain Number System"
+            c.onclick = function(){
+                wrongC()
+                nextIX()
+                a.disabled = true
+                b.disabled = true
+                d.disabled = true
+            }
+            d.textContent = "Domain Name System"
+            d.onclick = function(){
+                rightD()
+                nextIX()
+                a.disabled = true
+                b.disabled = true
+                c.disabled = true
+            }
+        }
+        function result(){
+            document.getElementById("con").style.display = "none"
+            document.getElementById("pop").style.display = "none"
+            const R = document.getElementById("result")
+            const h = document.createElement("h2")
+            h.textContent = "Congratulations"
+            const p = document.createElement("p")
+            p.textContent = `Your score is ${score}/100`
+            const pag = document.createElement("button")
+            pag.textContent = "Play Again"
+            pag.onclick = function(){
+                location.reload()
+            }
+            R.appendChild(h)
+            R.appendChild(p)
+            R.appendChild(pag)
+        }
+        function next(){                
+            bn.onclick = function(){
+                two()
+                a.disabled = false
+                b.disabled = false
+                c.disabled = false
+                d.disabled = false
+                resetTime()
+            }            
+        }
+        function nextI(){
+            bn.onclick = function(){
+                three()
+                a.disabled = false
+                b.disabled = false
+                c.disabled = false
+                d.disabled = false
+                resetTime()
+            }
+        }
+        function nextII(){
+            bn.onclick = function(){
+                four()
+                a.disabled = false
+                b.disabled = false
+                c.disabled = false
+                d.disabled = false
+                resetTime()
+            }
+        }
+        function nextIII(){
+            bn.onclick = function(){
+                five()
+                a.disabled = false
+                b.disabled = false
+                c.disabled = false
+                d.disabled = false
+                resetTime()
+            }
+        }
+        function nextIV(){
+            bn.onclick = function(){
+                six()
+                a.disabled = false
+                b.disabled = false
+                c.disabled = false
+                d.disabled = false
+                resetTime()
+            }
+        }
+        function nextV(){
+            bn.onclick = function(){
+                seven()
+                a.disabled = false
+                b.disabled = false
+                c.disabled = false
+                d.disabled = false
+                resetTime()
+            }
+        }
+        function nextVI(){
+            bn.onclick = function(){
+                eight()
+                a.disabled = false
+                b.disabled = false
+                c.disabled = false
+                d.disabled = false
+                resetTime()
+            }
+        }
+        function nextVII(){
+            bn.onclick = function(){
+                nine()
+                a.disabled = false
+                b.disabled = false
+                c.disabled = false
+                d.disabled = false
+                resetTime()
+            }
+        }
+        function nextVIII(){            
+            bn.onclick = function(){
+                ten()
+                a.disabled = false
+                b.disabled = false
+                c.disabled = false
+                d.disabled = false
+                resetTime()
+            }
+        }
+        function nextIX(){
+            bn.textContent = "See Result"
+            bn.onclick = function(){
+                result()
+                a.disabled = false
+                b.disabled = false
+                c.disabled = false
+                d.disabled = false
+            }
+        }
+    </script>
+</body>
+</html>
